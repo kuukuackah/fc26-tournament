@@ -282,19 +282,31 @@ export function TournamentProvider({ children }) {
   };
 
 const resetTournament = async () => {
-  const deleteCollection = async (collectionName) => {
-    const snap = await getDocs(collection(db, collectionName));
-    const chunks = [];
-    const docs = snap.docs;
-    for (let i = 0; i < docs.length; i += 400) {
-      chunks.push(docs.slice(i, i + 400));
-    }
-    for (const chunk of chunks) {
-      const batch = writeBatch(db);
-      chunk.forEach(d => batch.delete(d.ref));
-      await batch.commit();
-    }
-  };
+  // Delete players
+  const allPlayers = await getDocs(collection(db, 'players'));
+  const playerBatch = writeBatch(db);
+  allPlayers.forEach(d => playerBatch.delete(d.ref));
+  await playerBatch.commit();
+
+  // Delete groups
+  const allGroups = await getDocs(collection(db, 'groups'));
+  const groupBatch = writeBatch(db);
+  allGroups.forEach(d => groupBatch.delete(d.ref));
+  await groupBatch.commit();
+
+  // Delete matches
+  const allMatches = await getDocs(collection(db, 'matches'));
+  const matchBatch = writeBatch(db);
+  allMatches.forEach(d => matchBatch.delete(d.ref));
+  await matchBatch.commit();
+
+  // Reset settings
+  await updateDoc(doc(db, 'settings', 'main'), {
+    status: 'registration',
+    groupCount: 4,
+    advancersPerGroup: 2,
+  });
+
 
   try {
     await deleteCollection('players');
