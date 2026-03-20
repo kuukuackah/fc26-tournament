@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTournament } from '../context/TournamentContext';
 import './Admin.css';
 
@@ -481,11 +481,21 @@ function KnockoutTab() {
 
 function SettingsTab() {
  const { settings, updateSettings, resetTournament } = useTournament();
-  const [form, setForm] = useState({
-    tournamentName:        settings?.tournamentName        || '',
-    tournamentDescription: settings?.tournamentDescription || '',
-    adminPassword:         settings?.adminPassword         || '',
-  });
+const [form, setForm] = useState({
+  tournamentName:        settings?.tournamentName        || 'FC 26 Tournament',
+  tournamentDescription: settings?.tournamentDescription || 'The ultimate FC 26 showdown',
+  adminPassword:         settings?.adminPassword         || 'admin123',
+});
+
+useEffect(() => {
+  if (settings) {
+    setForm({
+      tournamentName:        settings.tournamentName        || 'FC 26 Tournament',
+      tournamentDescription: settings.tournamentDescription || 'The ultimate FC 26 showdown',
+      adminPassword:         settings.adminPassword         || 'admin123',
+    });
+  }
+}, [settings]);
   const [msg, setMsg] = useState(null);
 
   const handleSave = async () => {
