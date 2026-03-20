@@ -248,39 +248,40 @@ export function TournamentProvider({ children }) {
     return rounds;
   };
 
-const advanceKnockoutWinner = async (match, winnerId) => {
-  const ROUND_ORDER = ['round_of_32', 'round_of_16', 'quarterfinal', 'semifinal', 'final'];
-  const currentIdx = ROUND_ORDER.indexOf(match.stage);
-  if (currentIdx === -1 || currentIdx === ROUND_ORDER.length - 1) return;
+  const advanceKnockoutWinner = async (match, winnerId) => {
+    const ROUND_ORDER = ['round_of_32', 'round_of_16', 'quarterfinal', 'semifinal', 'final'];
+    const currentIdx = ROUND_ORDER.indexOf(match.stage);
+    if (currentIdx === -1 || currentIdx === ROUND_ORDER.length - 1) return;
 
-  const nextRound      = ROUND_ORDER[currentIdx + 1];
-  const nextMatchIndex = Math.floor(match.matchIndex / 2);
-  const isFirst        = match.matchIndex % 2 === 0;
+    const nextRound      = ROUND_ORDER[currentIdx + 1];
+    const nextMatchIndex = Math.floor(match.matchIndex / 2);
+    const isFirst        = match.matchIndex % 2 === 0;
 
-  const nextMatch = matches.find(m => m.stage === nextRound && m.matchIndex === nextMatchIndex);
-  if (!nextMatch) return;
+    const nextMatch = matches.find(m => m.stage === nextRound && m.matchIndex === nextMatchIndex);
+    if (!nextMatch) return;
 
-  await updateDoc(doc(db, 'matches', nextMatch.id), {
-    [isFirst ? 'player1Id' : 'player2Id']: winnerId
-  });
-};
+    await updateDoc(doc(db, 'matches', nextMatch.id), {
+      [isFirst ? 'player1Id' : 'player2Id']: winnerId
+    });
+  };
 
-const enterKnockoutScore = async (matchId, score1, score2) => {
-  const s1 = parseInt(score1, 10);
-  const s2 = parseInt(score2, 10);
-  const match = matches.find(m => m.id === matchId);
+  const enterKnockoutScore = async (matchId, score1, score2) => {
+    const s1 = parseInt(score1, 10);
+    const s2 = parseInt(score2, 10);
+    const match = matches.find(m => m.id === matchId);
 
-  let winner = null;
-  if (s1 > s2)      winner = match.player1Id;
-  else if (s2 > s1) winner = match.player2Id;
+    let winner = null;
+    if (s1 > s2)      winner = match.player1Id;
+    else if (s2 > s1) winner = match.player2Id;
 
-  await updateDoc(doc(db, 'matches', matchId), {
-    score1: s1, score2: s2, completed: true, winner
-  });
+    await updateDoc(doc(db, 'matches', matchId), {
+      score1: s1, score2: s2, completed: true, winner
+    });
 
-  if (winner) await advanceKnockoutWinner(match, winner);
-};
-const resetTournament = async () => {
+    if (winner) await advanceKnockoutWinner(match, winner);
+  };
+
+  const resetTournament = async () => {
     const batch = writeBatch(db);
 
     const allPlayers = await getDocs(collection(db, 'players'));
@@ -300,6 +301,7 @@ const resetTournament = async () => {
       advancersPerGroup: 2,
     });
   };
+
   const getPlayerById      = (id) => players.find(p => p.id === id);
   const getMatchesByGroup  = (groupId) => matches.filter(m => m.stage === 'group' && m.groupId === groupId);
   const getKnockoutMatches = () => matches.filter(m => m.stage !== 'group');
@@ -322,8 +324,8 @@ const resetTournament = async () => {
       generateKnockout,
       getKnockoutMatches,
       getPlayerById,
-     getTournamentStats,
-     resetTournament,
+      getTournamentStats,
+      resetTournament,
     }}>
       {children}
     </TournamentContext.Provider>
