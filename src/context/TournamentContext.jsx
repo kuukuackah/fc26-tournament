@@ -281,46 +281,35 @@ export function TournamentProvider({ children }) {
     if (winner) await advanceKnockoutWinner(match, winner);
   };
 
-const resetTournament = async () => {
-  // Delete players
-  const allPlayers = await getDocs(collection(db, 'players'));
-  const playerBatch = writeBatch(db);
-  allPlayers.forEach(d => playerBatch.delete(d.ref));
-  await playerBatch.commit();
+  const resetTournament = async () => {
+    console.log('Starting reset...');
 
-  // Delete groups
-  const allGroups = await getDocs(collection(db, 'groups'));
-  const groupBatch = writeBatch(db);
-  allGroups.forEach(d => groupBatch.delete(d.ref));
-  await groupBatch.commit();
+    const allPlayers = await getDocs(collection(db, 'players'));
+    console.log('Players to delete:', allPlayers.size);
+    for (const d of allPlayers.docs) {
+      await deleteDoc(doc(db, 'players', d.id));
+    }
 
-  // Delete matches
-  const allMatches = await getDocs(collection(db, 'matches'));
-  const matchBatch = writeBatch(db);
-  allMatches.forEach(d => matchBatch.delete(d.ref));
-  await matchBatch.commit();
+    const allGroups = await getDocs(collection(db, 'groups'));
+    console.log('Groups to delete:', allGroups.size);
+    for (const d of allGroups.docs) {
+      await deleteDoc(doc(db, 'groups', d.id));
+    }
 
-  // Reset settings
-  await updateDoc(doc(db, 'settings', 'main'), {
-    status: 'registration',
-    groupCount: 4,
-    advancersPerGroup: 2,
-  });
+    const allMatches = await getDocs(collection(db, 'matches'));
+    console.log('Matches to delete:', allMatches.size);
+    for (const d of allMatches.docs) {
+      await deleteDoc(doc(db, 'matches', d.id));
+    }
 
-
-  try {
-    await deleteCollection('players');
-    await deleteCollection('groups');
-    await deleteCollection('matches');
     await updateDoc(doc(db, 'settings', 'main'), {
       status: 'registration',
       groupCount: 4,
       advancersPerGroup: 2,
     });
-  } catch (e) {
-    throw new Error('Reset failed: ' + e.message);
-  }
-};
+
+    console.log('Reset complete!');
+  };
 
   const getPlayerById      = (id) => players.find(p => p.id === id);
   const getMatchesByGroup  = (groupId) => matches.filter(m => m.stage === 'group' && m.groupId === groupId);
