@@ -281,26 +281,34 @@ export function TournamentProvider({ children }) {
     if (winner) await advanceKnockoutWinner(match, winner);
   };
 
-  const resetTournament = async () => {
-    const batch = writeBatch(db);
+const resetTournament = async () => {
+  const deleteCollection = async (collectionName) => {
+    const snap = await getDocs(collection(db, collectionName));
+    const chunks = [];
+    const docs = snap.docs;
+    for (let i = 0; i < docs.length; i += 400) {
+      chunks.push(docs.slice(i, i + 400));
+    }
+    for (const chunk of chunks) {
+      const batch = writeBatch(db);
+      chunk.forEach(d => batch.delete(d.ref));
+      await batch.commit();
+    }
+  };
 
-    const allPlayers = await getDocs(collection(db, 'players'));
-    allPlayers.forEach(d => batch.delete(d.ref));
-
-    const allGroups = await getDocs(collection(db, 'groups'));
-    allGroups.forEach(d => batch.delete(d.ref));
-
-    const allMatches = await getDocs(collection(db, 'matches'));
-    allMatches.forEach(d => batch.delete(d.ref));
-
-    await batch.commit();
-
+  try {
+    await deleteCollection('players');
+    await deleteCollection('groups');
+    await deleteCollection('matches');
     await updateDoc(doc(db, 'settings', 'main'), {
       status: 'registration',
       groupCount: 4,
       advancersPerGroup: 2,
     });
-  };
+  } catch (e) {
+    throw new Error('Reset failed: ' + e.message);
+  }
+};
 
   const getPlayerById      = (id) => players.find(p => p.id === id);
   const getMatchesByGroup  = (groupId) => matches.filter(m => m.stage === 'group' && m.groupId === groupId);
