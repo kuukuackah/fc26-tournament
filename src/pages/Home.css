@@ -1,0 +1,135 @@
+.home-page { padding-top: 0; }
+
+.hero {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 400px;
+  background: radial-gradient(ellipse at center,
+    rgba(0, 229, 255, 0.08) 0%,
+    rgba(255, 184, 0, 0.04) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.hero-content {
+  text-align: center;
+  padding: 120px 0 100px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #ffffff 0%, #00e5ff 50%, #ffb800 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-desc {
+  font-size: 1.1rem;
+  color: var(--text-2);
+  margin-bottom: 40px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-lg {
+  padding: 13px 32px !important;
+  font-size: 1rem !important;
+}
+
+.home-section { padding: 60px 0; }
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.player-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 18px;
+  transition: var(--transition);
+}
+
+.player-card:hover {
+  border-color: var(--border-2);
+  background: var(--surface-2);
+  transform: translateX(3px);
+}
+
+.player-number {
+  font-family: var(--font-cond);
+  font-size: 0.75rem;
+  color: var(--text-3);
+  width: 22px;
+  text-align: center;
+}
+
+.player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 1px solid var(--border-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.player-gamertag {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.player-name {
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.how-card { text-align: center; }
+
+.how-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.how-card h3 {
+  color: var(--cyan);
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+}

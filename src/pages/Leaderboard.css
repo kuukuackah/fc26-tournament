@@ -1,0 +1,85 @@
+.leaderboard-highlights {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.highlight-card {
+  flex: 1;
+  min-width: 160px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  text-align: center;
+  transition: var(--transition);
+}
+
+.highlight-card.gold {
+  border: 1px solid rgba(255, 184, 0, 0.25);
+  background: linear-gradient(135deg, rgba(255,184,0,0.08), transparent);
+}
+
+.highlight-card.cyan {
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0,229,255,0.06), transparent);
+}
+
+.highlight-icon { font-size: 1.8rem; margin-bottom: 6px; }
+
+.highlight-label {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+
+.highlight-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.highlight-stat {
+  font-size: 0.82rem;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+
+.leaderboard-table tr.top-1 td { background: rgba(255, 184, 0, 0.05); }
+.leaderboard-table tr.top-2 td { background: rgba(0, 229, 255, 0.04); }
+.leaderboard-table tr.top-3 td { background: rgba(0, 224, 150, 0.03); }
+
+.rank-col { font-size: 1rem; }
+
+.lb-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.lb-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.lb-gamertag {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+}
+
+.lb-name {
+  font-size: 0.75rem;
+  color: var(--text-2);
+}

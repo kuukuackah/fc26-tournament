@@ -1,0 +1,111 @@
+.groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 24px;
+}
+
+.group-card { overflow: hidden; }
+
+.group-label {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  letter-spacing: 0.08em;
+  color: var(--cyan);
+  text-shadow: var(--glow-cyan);
+  margin-bottom: 16px;
+}
+
+.player-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-cond);
+  font-weight: 600;
+}
+
+.mini-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0,229,255,0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.advance-note {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan);
+  margin-top: 10px;
+  opacity: 0.7;
+}
+
+.fixtures-label {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+.fixtures-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fixture-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.fixture-player {
+  flex: 1;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fixture-player.right { text-align: right; }
+.fixture-player.winner { color: var(--cyan) !important; }
+
+.fixture-score {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  min-width: 64px;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.score-win     { color: var(--cyan); }
+.score-sep     { color: var(--text-3); font-size: 0.9rem; }
+.score-pending {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  color: var(--text-3);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}

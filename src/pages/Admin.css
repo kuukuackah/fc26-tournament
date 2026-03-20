@@ -1,0 +1,218 @@
+.admin-login-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.admin-login-card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+}
+
+.admin-lock {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.admin-login-card h2 { margin-bottom: 8px; }
+
+.admin-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-tab > h3 {
+  font-size: 1.6rem;
+  color: var(--cyan);
+}
+
+.phase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.phase-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+  text-align: center;
+}
+
+.phase-btn:hover {
+  border-color: var(--border-2);
+  background: var(--surface-2);
+}
+
+.phase-btn.active {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+  box-shadow: 0 0 16px rgba(0,229,255,0.12);
+}
+
+.phase-icon { font-size: 1.6rem; }
+
+.phase-label {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
+}
+
+.phase-btn.active .phase-label { color: var(--cyan); }
+
+.phase-desc {
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+.mini-avatar-admin {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0,229,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.groups-assign-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.assign-group-card { padding: 18px; }
+
+.assign-group-label {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--cyan);
+  margin-bottom: 12px;
+}
+
+.assign-players {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.assign-player-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-cond);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.assign-player-row span { flex: 1; }
+
+.move-select {
+  width: auto;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.assign-count {
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-family: var(--font-cond);
+  letter-spacing: 0.08em;
+}
+
+.scores-section-label {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 10px;
+}
+
+.score-group-block { margin-bottom: 16px; }
+
+.score-group-label {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--cyan);
+  margin-bottom: 12px;
+}
+
+.score-entry-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.score-entry-row:last-child { border-bottom: none; }
+
+.se-player {
+  flex: 1;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.se-player.right { text-align: right; }
+.se-vs { color: var(--text-3); font-size: 0.8rem; }
+
+.ko-result-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ko-result-row:last-child { border-bottom: none; }
+
+.ko-player {
+  flex: 1;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.ko-player.right  { text-align: right; }
+.ko-player.win    { color: var(--cyan); }
+.ko-player.lose   { color: var(--text-3); }
+
+.ko-score {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  min-width: 80px;
+  text-align: center;
+}
+
+.ko-pending {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  min-width: 80px;
+  text-align: center;
+}

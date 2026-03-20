@@ -1,0 +1,68 @@
+.register-layout {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.register-card { max-width: 100%; }
+
+.reg-player-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: var(--transition);
+  animation: fadeUp 0.3s ease forwards;
+}
+
+.reg-player-row:hover { border-color: var(--border-2); }
+
+.reg-number {
+  font-family: var(--font-cond);
+  font-size: 0.72rem;
+  color: var(--text-3);
+  width: 24px;
+}
+
+.reg-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--cyan-dim);
+  border: 1px solid rgba(0,229,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--cyan);
+  flex-shrink: 0;
+}
+
+.reg-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.reg-gamertag {
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--text);
+  letter-spacing: 0.04em;
+}
+
+.reg-name {
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+
+@media (max-width: 900px) {
+  .register-layout { grid-template-columns: 1fr; }
+}
