@@ -480,7 +480,7 @@ function KnockoutTab() {
 }
 
 function SettingsTab() {
-const { settings, updateSettings } = useTournament();
+const { settings, updateSettings, resetTournament } = useTournament();
 const [confirmReset, setConfirmReset] = useState(false);
 const [resetting, setResetting] = useState(false);
 const [form, setForm] = useState({
@@ -509,11 +509,11 @@ useEffect(() => {
     }
     setTimeout(() => setMsg(null), 3000);
   };
-  const handleReset = async () => {
+const handleReset = async () => {
   setResetting(true);
   try {
-    await updateSettings({ status: 'registration' });
-    setMsg({ type: 'success', text: 'Tournament reset to registration phase.' });
+    await resetTournament();
+    setMsg({ type: 'success', text: 'Tournament reset successfully!' });
     setConfirmReset(false);
   } catch (e) {
     setMsg({ type: 'error', text: e.message });
