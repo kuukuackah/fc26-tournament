@@ -51,7 +51,9 @@ function OverviewTab() {
   const { settings, updateSettings, getTournamentStats, generateKnockout } = useTournament();
   const stats = getTournamentStats();
   const [generating, setGenerating] = useState(false);
-  const [msg, setMsg] = useState(null);
+const [msg, setMsg]               = useState(null);
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [resetting, setResetting]   = useState(false);
 
   const setPhase = async (status) => {
     await updateSettings({ status });
@@ -478,7 +480,7 @@ function KnockoutTab() {
 }
 
 function SettingsTab() {
-  const { settings, updateSettings } = useTournament();
+ const { settings, updateSettings, resetTournament } = useTournament();
   const [form, setForm] = useState({
     tournamentName:        settings?.tournamentName        || '',
     tournamentDescription: settings?.tournamentDescription || '',
@@ -494,6 +496,17 @@ function SettingsTab() {
       setMsg({ type: 'error', text: e.message });
     }
     setTimeout(() => setMsg(null), 3000);
+  };
+  const handleReset = async () => {
+    setResetting(true);
+    try {
+      await resetTournament();
+      setMsg({ type: 'success', text: 'Tournament reset successfully!' });
+      setConfirmReset(false);
+    } catch (e) {
+      setMsg({ type: 'error', text: e.message });
+    }
+    setResetting(false);
   };
 
   return (
@@ -514,8 +527,31 @@ function SettingsTab() {
             <label>Admin Password</label>
             <input type="password" value={form.adminPassword} onChange={e => setForm(f => ({ ...f, adminPassword: e.target.value }))} />
           </div>
-          <button className="btn btn-primary" onClick={handleSave}>Save Settings</button>
-        </div>
+<button className="btn btn-primary" onClick={handleSave}>Save Settings</button>
+          
+          <div className="divider" />
+          
+          <h4 style={{ color: 'var(--red)', fontFamily: 'var(--font-cond)', letterSpacing: '0.1em', textTransform: 'uppercase', fontSize: '0.85rem' }}>
+            Danger Zone
+          </h4>
+          <p style={{ fontSize: '0.85rem', marginBottom: 12 }}>
+            This will delete ALL players, groups, matches and reset the tournament to registration phase. This cannot be undone.
+          </p>
+          {!confirmReset ? (
+            <button className="btn btn-danger" onClick={() => setConfirmReset(true)}>
+              🗑 Reset Entire Tournament
+            </button>
+          ) : (
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button className="btn btn-danger" onClick={handleReset} disabled={resetting}>
+                {resetting ? 'Resetting...' : '⚠ Yes, Reset Everything'}
+              </button>
+              <button className="btn btn-secondary" onClick={() => setConfirmReset(false)}>
+                Cancel
+              </button>
+            </div>
+          )}
+                  </div>
       </div>
     </div>
   );

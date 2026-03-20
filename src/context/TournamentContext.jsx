@@ -280,7 +280,26 @@ const enterKnockoutScore = async (matchId, score1, score2) => {
 
   if (winner) await advanceKnockoutWinner(match, winner);
 };
+const resetTournament = async () => {
+    const batch = writeBatch(db);
 
+    const allPlayers = await getDocs(collection(db, 'players'));
+    allPlayers.forEach(d => batch.delete(d.ref));
+
+    const allGroups = await getDocs(collection(db, 'groups'));
+    allGroups.forEach(d => batch.delete(d.ref));
+
+    const allMatches = await getDocs(collection(db, 'matches'));
+    allMatches.forEach(d => batch.delete(d.ref));
+
+    await batch.commit();
+
+    await updateDoc(doc(db, 'settings', 'main'), {
+      status: 'registration',
+      groupCount: 4,
+      advancersPerGroup: 2,
+    });
+  };
   const getPlayerById      = (id) => players.find(p => p.id === id);
   const getMatchesByGroup  = (groupId) => matches.filter(m => m.stage === 'group' && m.groupId === groupId);
   const getKnockoutMatches = () => matches.filter(m => m.stage !== 'group');
@@ -303,7 +322,8 @@ const enterKnockoutScore = async (matchId, score1, score2) => {
       generateKnockout,
       getKnockoutMatches,
       getPlayerById,
-      getTournamentStats,
+     getTournamentStats,
+     resetTournament,
     }}>
       {children}
     </TournamentContext.Provider>
